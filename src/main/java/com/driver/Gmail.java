@@ -9,15 +9,15 @@ public class Gmail extends Email {
     int inboxCapacity; //maximum number of mails inbox can store
     //Inbox: Stores mails. Each mail has date (Date), sender (String), message (String). It is guaranteed that message is distinct for all mails.
     //Trash: Stores mails. Each mail has date (Date), sender (String), message (String)
-    ArrayList<Mail> InboxMails;
-    ArrayList<Mail> TrashMail;
-    int noOfMailsReceived;
+    private ArrayList<Mail> InboxMails;
+    private ArrayList<Mail> TrashMail;
+
     public Gmail(String emailId, int inboxCapacity) {
         super(emailId);
         this.inboxCapacity =inboxCapacity;
         this.InboxMails = new ArrayList<>();
         this.TrashMail = new ArrayList<>();
-        this.noOfMailsReceived = 0;
+
     }
 
     public void receiveMail(Date date, String sender, String message){
@@ -30,6 +30,7 @@ public class Gmail extends Email {
 
         if(InboxMails.size()==inboxCapacity){
             Mail oldestMail = InboxMails.get(0);
+
             InboxMails.remove(oldestMail);
             TrashMail.add(oldestMail);
             InboxMails.add(newMail);
@@ -46,9 +47,14 @@ public class Gmail extends Email {
 
         ListIterator<Mail> iterator = InboxMails.listIterator();
         while(iterator.hasNext()){
-            if(message.equals(iterator.next().getMessage())){
-                iterator.remove();
+            Mail currentMail = iterator.next();
+            if(message.equals(currentMail.getMessage())){
+                TrashMail.add(currentMail);
+                break;
             }
+        }
+        for(Mail mail : TrashMail){
+            System.out.println(mail.getMessage());
         }
 
     }
@@ -59,8 +65,8 @@ public class Gmail extends Email {
         if(InboxMails.size()==0){
             return null;
         }else{
-            String latestMessage = InboxMails.get(InboxMails.size()-1).getMessage();
-            return latestMessage;
+            return InboxMails.get(InboxMails.size()-1).getMessage();
+
         }
 
     }
@@ -71,8 +77,8 @@ public class Gmail extends Email {
         if(InboxMails.size()==0){
             return null;
         }else{
-            String oldestMessage = InboxMails.get(0).getMessage();
-            return oldestMessage;
+           return InboxMails.get(0).getMessage();
+
         }
 
     }
