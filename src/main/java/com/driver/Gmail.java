@@ -9,14 +9,17 @@ public class Gmail extends Email {
     int inboxCapacity; //maximum number of mails inbox can store
     //Inbox: Stores mails. Each mail has date (Date), sender (String), message (String). It is guaranteed that message is distinct for all mails.
     //Trash: Stores mails. Each mail has date (Date), sender (String), message (String)
+    Map<Date,String> InboxMails;
+    Map<Date,String> TrashMail;
+    int noOfMailsReceived;
     public Gmail(String emailId, int inboxCapacity) {
         super(emailId);
-        this.inboxCapacity=inboxCapacity;
+        this.inboxCapacity =inboxCapacity;
+        this.InboxMails = new HashMap<>();
+        this.TrashMail = new HashMap<>();
+        this.noOfMailsReceived = 0;
     }
 
-    int noOfMailsReceived=0;
-    HashMap<Date,String> InboxMails = new HashMap<>();
-    HashMap<Date,String> TrashMail = new HashMap<>();
     public void receiveMail(Date date, String sender, String message){
         // If the inbox is full, move the oldest mail in the inbox to trash and add the new mail to inbox.
         // It is guaranteed that:
@@ -29,9 +32,17 @@ public class Gmail extends Email {
 
         if(noOfMailsReceived==inboxCapacity){
 
-            Date oldestMail = InboxMails.entrySet().stream().findFirst().get().getKey();
+//            Date oldestMail = InboxMails.entrySet().stream().findFirst().get().getKey();
+//            Date oldestMail = InboxMails.entrySet().stream().reduce((one, two)->two).get().getKey();
+//
+//            InboxMails.entrySet().removeIf(entry -> (oldestMail == entry.getKey()));
 
-            InboxMails.entrySet().removeIf(entry -> (oldestMail == entry.getKey()));
+            Date oldestMail;
+            List<Date> ls = new ArrayList<>(InboxMails.keySet());
+            if(!ls.isEmpty()){
+                oldestMail=ls.get(0);
+                InboxMails.entrySet().remove(oldestMail);
+            }
 
         }
         InboxMails.put(date,message);
@@ -60,9 +71,11 @@ public class Gmail extends Email {
         if(noOfMailsReceived==0){
             return null;
         }else{
-            List<Date> listKeys = new ArrayList<>(InboxMails.keySet());
-            String latestMessage = InboxMails.get(listKeys.get(listKeys.size()-1));
-            return latestMessage;
+//            List<Date> listKeys = new ArrayList<>(InboxMails.keySet());
+//            String latestMessage = InboxMails.get(listKeys.get(listKeys.size()-1));
+//              String latestMessage = InboxMails.entrySet().stream().reduce((one, two)->two).get().getValue();
+              String latestMessage = InboxMails.entrySet().stream().findFirst().get().getValue();
+              return latestMessage;
         }
 
 
@@ -74,7 +87,7 @@ public class Gmail extends Email {
         if(noOfMailsReceived==0){
             return null;
         }else{
-            String oldestMessage = InboxMails.entrySet().stream().findFirst().get().getValue();
+            String oldestMessage = InboxMails.entrySet().stream().reduce((one, two)->two).get().getValue();
             return oldestMessage;
         }
 
@@ -110,21 +123,25 @@ public class Gmail extends Email {
 
     public int getInboxSize(){
         // Return number of mails in inbox
-        return noOfMailsReceived;
+        return noOfMailsReceived-1;
 
     }
 
     public int getTrashSize(){
         // Return number of mails in Trash
+
          return TrashMail.size();
     }
 
     public void emptyTrash(){
         // clear all mails in the trash
-        Iterator<Map.Entry<Date,String>> iterator = TrashMail.entrySet().iterator();
-        while(iterator.hasNext()){
-            iterator.remove();
-        }
+//        Iterator<Map.Entry<Date,String>> iterator = TrashMail.entrySet().iterator();
+//        while(iterator.hasNext()){
+////            System.out.println(iterator.next().toString());
+//            iterator.remove();
+//
+//        }
+        TrashMail.clear();
     }
 
     public int getInboxCapacity() {
