@@ -45,17 +45,26 @@ public class Gmail extends Email {
         // Each message is distinct
         // If the given message is found in any mail in the inbox, move the mail to trash, else do nothing
 
-        ListIterator<Mail> iterator = InboxMails.listIterator();
-        while(iterator.hasNext()){
-            Mail currentMail = iterator.next();
-            if(message.equals(currentMail.getMessage())){
-                TrashMail.add(currentMail);
+//        ListIterator<Mail> iterator = InboxMails.listIterator();
+//        while(iterator.hasNext()){
+//            Mail currentMail = iterator.next();
+//            if(message.equals(currentMail.getMessage())){
+//                TrashMail.add(currentMail);
+//                break;
+//            }
+//        }
+        int idx = -1;
+
+        for(int i = 0; i < InboxMails.size(); i++){
+            if(message.equals(InboxMails.get(i).getMessage())){
+                idx = i;
                 break;
             }
         }
-//        for(Mail mail : TrashMail){
-//            System.out.println(mail.getMessage());
-//        }
+        if(idx != -1){
+            TrashMail.add(InboxMails.get(idx));
+            InboxMails.remove(idx);
+        }
 
     }
 
@@ -86,28 +95,36 @@ public class Gmail extends Email {
     public int findMailsBetweenDates(Date start, Date end){
         //find number of mails in the inbox which are received between given dates
         //It is guaranteed that start date <= end date
-        int startIdx=0;
-        int endIdx=0;
+//        int startIdx=0;
+//        int endIdx=0;
+//
+//        ListIterator<Mail> iterator = InboxMails.listIterator();
+//        while(iterator.hasNext()){
+//            Date currentMailDate = iterator.next().getDate();
+//            if(currentMailDate.equals(start)){
+//                startIdx=iterator.previousIndex();
+//                break;
+//            }
+//        }
+//        ListIterator<Mail> iterate = InboxMails.listIterator(startIdx);
+//        while(iterator.hasNext()){
+//            Date currentMailDate = iterator.next().getDate();
+//            if(currentMailDate.equals(end)){
+//                continue;
+//            }else{
+//                endIdx= iterate.previousIndex();
+//            }
+//        }
+//        int totalmailBetween = endIdx-startIdx+1;
+//        return totalmailBetween;
 
-        ListIterator<Mail> iterator = InboxMails.listIterator();
-        while(iterator.hasNext()){
-            Date currentMailDate = iterator.next().getDate();
-            if(currentMailDate.equals(start)){
-                startIdx=iterator.previousIndex();
-                break;
+        int count = 0;
+        for(int i = 0; i < InboxMails.size(); i++){
+            if(InboxMails.get(i).date.compareTo(start) >=0 && InboxMails.get(i).date.compareTo(end) <= 0){
+                count++;
             }
         }
-        ListIterator<Mail> iterate = InboxMails.listIterator(startIdx);
-        while(iterator.hasNext()){
-            Date currentMailDate = iterator.next().getDate();
-            if(currentMailDate.equals(end)){
-                continue;
-            }else{
-                endIdx= iterate.previousIndex();
-            }
-        }
-        int totalmailBetween = endIdx-startIdx+1;
-        return totalmailBetween;
+        return count;
 
     }
 
