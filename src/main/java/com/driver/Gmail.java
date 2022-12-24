@@ -53,9 +53,9 @@ public class Gmail extends Email {
                 break;
             }
         }
-        for(Mail mail : TrashMail){
-            System.out.println(mail.getMessage());
-        }
+//        for(Mail mail : TrashMail){
+//            System.out.println(mail.getMessage());
+//        }
 
     }
 
