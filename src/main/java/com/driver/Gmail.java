@@ -29,22 +29,10 @@ public class Gmail extends Email {
         Mail newMail = new Mail(date,sender,message);
 
         if(InboxMails.size()==inboxCapacity){
-
-//            Date oldestMail = InboxMails.entrySet().stream().findFirst().get().getKey();
-//            Date oldestMail = InboxMails.entrySet().stream().reduce((one, two)->two).get().getKey();
-//
-//            InboxMails.entrySet().removeIf(entry -> (oldestMail == entry.getKey()));
             Mail oldestMail = InboxMails.get(0);
             InboxMails.remove(oldestMail);
             TrashMail.add(oldestMail);
             InboxMails.add(newMail);
-
-//            List<Date> ls = new ArrayList<>(InboxMails.keySet());
-//            if(!ls.isEmpty()){
-//                oldestMail=ls.get(0);
-//                InboxMails.entrySet().remove(oldestMail);
-//            }
-
         }else{
             InboxMails.add(newMail);
         }
@@ -71,15 +59,9 @@ public class Gmail extends Email {
         if(InboxMails.size()==0){
             return null;
         }else{
-//            List<Date> listKeys = new ArrayList<>(InboxMails.keySet());
-//            String latestMessage = InboxMails.get(listKeys.get(listKeys.size()-1));
-//              String latestMessage = InboxMails.entrySet().stream().reduce((one, two)->two).get().getValue();
-//              String latestMessage = InboxMails.entrySet().stream().findFirst().get().getValue();
-
             String latestMessage = InboxMails.get(InboxMails.size()-1).getMessage();
             return latestMessage;
         }
-
 
     }
 
@@ -89,8 +71,6 @@ public class Gmail extends Email {
         if(InboxMails.size()==0){
             return null;
         }else{
-//            String oldestMessage = InboxMails.entrySet().stream().reduce((one, two)->two).get().getValue();
-
             String oldestMessage = InboxMails.get(0).getMessage();
             return oldestMessage;
         }
@@ -138,13 +118,7 @@ public class Gmail extends Email {
     }
 
     public void emptyTrash(){
-        // clear all mails in the trash
-//        Iterator<Map.Entry<Date,String>> iterator = TrashMail.entrySet().iterator();
-//        while(iterator.hasNext()){
-////            System.out.println(iterator.next().toString());
-//            iterator.remove();
-//
-//        }
+
         TrashMail.clear();
     }
 
