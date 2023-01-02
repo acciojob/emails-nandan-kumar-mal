@@ -29,25 +29,26 @@ public class Email {
         if(oldPassword.equals(this.password)){
             if(newPassword.length()<8){
                 isNewPasswordValid=false;
-            }
-            String upperCaseChars="(.*[A-Z].*)";
-            if(!newPassword.matches(upperCaseChars)){
-                isNewPasswordValid=false;
-            }
-            String lowerCaseChars="(.*[a-z].*)";
-            if(!newPassword.matches(lowerCaseChars)){
-                isNewPasswordValid=false;
-            }
-            String numbers = "(.*[0-9].*)";
-            if(!newPassword.matches(numbers)){
-                isNewPasswordValid=false;
-            }
-//            String specialChars = "(.*[!, \",#,$,%,&,',(,),*,+,-,.,/,:, ;, <, =, >, ?, @, [, \\, ], ^, _, `, {, |, }, ~, ].*)";
-//            if(!newPassword.matches(specialChars)){
-//                isNewPasswordValid = false;
-//            }
-            if(!isNewPasswordValid){
-                isNewPasswordValid=true;
+            }else {
+                String upperCaseChars = "(.*[A-Z].*)";
+                if (!newPassword.matches(upperCaseChars)) {
+                    isNewPasswordValid = false;
+                }
+                String lowerCaseChars = "(.*[a-z].*)";
+                if (!newPassword.matches(lowerCaseChars)) {
+                    isNewPasswordValid = false;
+                }
+                String numbers = "(.*[0-9].*)";
+                if (!newPassword.matches(numbers)) {
+                    isNewPasswordValid = false;
+                }
+                //            String specialChars = "(.*[!, \",#,$,%,&,',(,),*,+,-,.,/,:, ;, <, =, >, ?, @, [, \\, ], ^, _, `, {, |, }, ~, ].*)";
+                //            if(!newPassword.matches(specialChars)){
+                //                isNewPasswordValid = false;
+                //            }
+                if (!isNewPasswordValid) {
+                    isNewPasswordValid = true;
+                }
             }
         }
         if(isNewPasswordValid){
