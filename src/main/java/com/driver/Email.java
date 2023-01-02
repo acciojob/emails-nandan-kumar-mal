@@ -42,9 +42,12 @@ public class Email {
             if(!newPassword.matches(numbers)){
                 isNewPasswordValid=false;
             }
-            String specialChars = "(.*[!, \",#,$,%,&,',(,),*,+,-,.,/,:, ;, <, =, >, ?, @, [, \\, ], ^, _, `, {, |, }, ~, ].*)";
-            if(!newPassword.matches(specialChars)){
-                isNewPasswordValid = false;
+//            String specialChars = "(.*[!, \",#,$,%,&,',(,),*,+,-,.,/,:, ;, <, =, >, ?, @, [, \\, ], ^, _, `, {, |, }, ~, ].*)";
+//            if(!newPassword.matches(specialChars)){
+//                isNewPasswordValid = false;
+//            }
+            if(!isNewPasswordValid){
+                isNewPasswordValid=true;
             }
         }
         if(isNewPasswordValid){
