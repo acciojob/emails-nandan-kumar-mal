@@ -30,15 +30,13 @@ public class Gmail extends Email {
 
         Triple<Date,String,String> newMail = Triple.of(date,sender,message);
 
-        if(InboxMails.size()==inboxCapacity){
-            Triple<Date,String,String> oldestMail = InboxMails.get(0);
+        if(InboxMails.size()==inboxCapacity) {
+            Triple<Date, String, String> oldestMail = InboxMails.get(0);
 
             InboxMails.remove(0);
             TrashMail.add(oldestMail);
-            InboxMails.add(newMail);
-        }else{
-            InboxMails.add(newMail);
         }
+        InboxMails.add(newMail);
 
 
     }
@@ -73,24 +71,24 @@ public class Gmail extends Email {
     public String findLatestMessage(){
         // If the inbox is empty, return null
         // Else, return the message of the latest mail present in the inbox
-        if(InboxMails.size()==0){
+        if(InboxMails.size()==0)
             return null;
-        }else{
-            return InboxMails.get(InboxMails.size()-1).getRight();
 
-        }
+        return InboxMails.get(InboxMails.size()-1).getRight();
+
+
 
     }
 
     public String findOldestMessage(){
         // If the inbox is empty, return null
         // Else, return the message of the oldest mail present in the inbox
-        if(InboxMails.size()==0){
+        if(InboxMails.size()==0)
             return null;
-        }else{
-           return InboxMails.get(0).getRight();
 
-        }
+        return InboxMails.get(0).getRight();
+
+
 
     }
 
